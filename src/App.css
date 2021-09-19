@@ -11,7 +11,9 @@
   justify-content: center;
   align-items: center;
 }
-
+.css-wjh20t-MuiPagination-ul{
+  flex-wrap: nowrap !important;
+}
 @media only screen and (max-width: 1200px) {
   .grid_style {
     grid-template-columns: 1fr 1fr 1fr;
