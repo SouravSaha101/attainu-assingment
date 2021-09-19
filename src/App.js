@@ -33,6 +33,7 @@ function App() {
       el["Full Name"].toLowerCase().includes(searchName.toLowerCase())
     );
     setPaginationOnChange(filterData);
+    selectCountry("")
     setLoading(false);
   };
 
