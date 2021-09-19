@@ -82,6 +82,7 @@ function ProfileCard({ data, editData, deleteData, uniqueCountryData }) {
               label="DOB:"
               value={dateFormatter(data["Date of birth"].split("T")[0])}
               sx={{ mb: 4.3 }}
+              disabled
             />
             <br />
             {data["Country"]}
