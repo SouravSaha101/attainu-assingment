@@ -6,11 +6,16 @@ import {
   CardContent,
   CardActions,
   Card,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
-
-
-export default function ProfileCard({ data, editData, deleteData }) {
+export default function ProfileCard({
+  data,
+  editData,
+  deleteData,
+  uniqueCountryData,
+}) {
   const [isEdit, setIsEdit] = useState(false);
   const [userData, setUserData] = useState(data);
 
@@ -22,13 +27,14 @@ export default function ProfileCard({ data, editData, deleteData }) {
     deleteData(userData["Id"]);
   };
   const inputHandler = (e) => {
-    let id = e.target.id;
+    let id = e.target.id ? e.target.id : "Country";
     let value =
       id === "Date of birth"
         ? new Date(e.target.value).toISOString()
         : e.target.value;
     setUserData({ ...userData, [id]: value });
   };
+  const styleObj = { height: "2rem;" };
   return (
     <Card sx={{ width: 275, height: 270, position: "relative" }}>
       {!isEdit ? (
@@ -72,7 +78,7 @@ export default function ProfileCard({ data, editData, deleteData }) {
             onChange={inputHandler}
           />
           <br />
-          <Typography variant="sopan">
+          <Typography variant="span">
             <TextField
               id="Date of birth"
               variant="standard"
@@ -83,7 +89,22 @@ export default function ProfileCard({ data, editData, deleteData }) {
               onChange={inputHandler}
             />
             <br />
-            {userData["Country"]}
+            <Select
+              labelId="Country"
+              id="Country"
+              value={userData["Country"]}
+              onChange={inputHandler}
+              sx={styleObj}
+              placeholder="Select Country"
+              label="Select Country"
+            >
+              {uniqueCountryData &&
+                uniqueCountryData.map((country, index) => (
+                  <MenuItem key={index} id="Country" value={country}>
+                    {country}
+                  </MenuItem>
+                ))}
+            </Select>
           </Typography>
         </CardContent>
       )}

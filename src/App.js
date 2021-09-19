@@ -73,6 +73,7 @@ function App() {
       (el) => el["Country"] === e.target.value
     );
     setPaginationOnChange(filterData);
+    setSearchName("")
   };
 
   function setPaginationOnChange(filterData) {
@@ -96,6 +97,7 @@ function App() {
     newData[index]["Full Name"] = data["Full Name"];
     newData[index]["Date of birth"] = data["Date of birth"];
     newData[index]["Email"] = data["Email"];
+    newData[index]["Country"] = data["Country"];
     setMasterData(newData);
     setPaginationOnChange(newData);
   };
@@ -159,6 +161,7 @@ function App() {
                   data={el}
                   editData={editHandler}
                   deleteData={deleteHandler}
+                  uniqueCountryData={uniqueCountryData}
                 />
               ))}
             </div>
