@@ -8,21 +8,26 @@ import {
   Card,
 } from "@mui/material";
 
-const initalData = {
-  "Full Name": "",
-  Country: "",
-  Id: "",
-  "Date of birth": "",
-  Email: "",
-  "Created at": "",
-};
 
-export default function ProfileCard({ data }) {
+
+export default function ProfileCard({ data, editData, deleteData }) {
   const [isEdit, setIsEdit] = useState(false);
   const [userData, setUserData] = useState(data);
 
   const saveHandler = () => {
     setIsEdit(false);
+    editData(userData);
+  };
+  const deleteHandler = () => {
+    deleteData(userData["Id"]);
+  };
+  const inputHandler = (e) => {
+    let id = e.target.id;
+    let value =
+      id === "Date of birth"
+        ? new Date(e.target.value).toISOString()
+        : e.target.value;
+    setUserData({ ...userData, [id]: value });
   };
   return (
     <Card sx={{ width: 275, height: 270, position: "relative" }}>
@@ -31,10 +36,10 @@ export default function ProfileCard({ data }) {
           <Typography variant="h6" component="div" sx={{ mb: 2.5 }}>
             {data["Full Name"]}
           </Typography>
-          <Typography sx={{ mb: 2.5 }} color="text.secondary" >
+          <Typography sx={{ mb: 2.5 }} color="text.secondary">
             {data["Email"]}
           </Typography>
-          <Typography variant="span" sx={{ mb: 2.5 }}  >
+          <Typography variant="span" sx={{ mb: 2.5 }}>
             <TextField
               id="standard-basic"
               variant="standard"
@@ -42,7 +47,7 @@ export default function ProfileCard({ data }) {
               label="DOB:"
               value={data["Date of birth"].split("T")[0]}
               disabled
-              sx={{ mb: 4.3 }} 
+              sx={{ mb: 4.3 }}
             />
             <br />
             {data["Country"]}
@@ -56,6 +61,7 @@ export default function ProfileCard({ data }) {
             id="Full Name"
             value={userData["Full Name"]}
             sx={{ marginBottom: "12px" }}
+            onChange={inputHandler}
           />
           <TextField
             label="Email: :"
@@ -63,16 +69,18 @@ export default function ProfileCard({ data }) {
             id="Email"
             value={userData["Email"]}
             sx={{ marginBottom: "12px" }}
+            onChange={inputHandler}
           />
           <br />
           <Typography variant="sopan">
             <TextField
-              id="standard-basic"
+              id="Date of birth"
               variant="standard"
               type="date"
               label="DOB:"
               value={userData["Date of birth"].split("T")[0]}
               sx={{ marginBottom: "12px" }}
+              onChange={inputHandler}
             />
             <br />
             {userData["Country"]}
@@ -90,7 +98,9 @@ export default function ProfileCard({ data }) {
             Save
           </Button>
         )}
-        <Button size="small">Delete</Button>
+        <Button size="small" onClick={deleteHandler}>
+          Delete
+        </Button>
       </CardActions>
     </Card>
   );

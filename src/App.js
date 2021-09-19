@@ -9,7 +9,6 @@ import {
   CircularProgress,
   Pagination,
   Stack,
-  InputLabel,
   Select,
   MenuItem,
   TextField,
@@ -90,6 +89,20 @@ function App() {
     }
     setChunkData(data);
   }
+  const editHandler = (data) => {
+    let newData = [...masterData];
+    let index = newData.findIndex((e) => e["Id"] === data["Id"]);
+    newData[index]["Full Name"] = data["Full Name"];
+    newData[index]["Date of birth"] = data["Date of birth"];
+    newData[index]["Email"] = data["Email"];
+    setMasterData(newData);
+    setPaginationOnChange(newData);
+  };
+  const deleteHandler = (id) => {
+    let newData = masterData.filter((e) => e["Id"] !== id);
+    setMasterData(newData);
+    setPaginationOnChange(newData);
+  };
   return (
     <>
       <Container maxWidth="xl" sx={{ textAlign: "center" }}>
@@ -140,7 +153,12 @@ function App() {
           <>
             <div className="grid_style">
               {chunkData.map((el) => (
-                <ProfileCard key={el.Id} data={el} />
+                <ProfileCard
+                  key={el.Id}
+                  data={el}
+                  editData={editHandler}
+                  deleteData={deleteHandler}
+                />
               ))}
             </div>
             <Stack spacing={5} className="pagination_style">
