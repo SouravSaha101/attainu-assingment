@@ -140,13 +140,7 @@ function App() {
           <>
             <div className="grid_style">
               {chunkData.map((el) => (
-                <ProfileCard
-                  key={el.Id}
-                  name={el["Full Name"]}
-                  email={el["Email"]}
-                  dob={el["Date of birth"]}
-                  country={el["Country"]}
-                />
+                <ProfileCard key={el.Id} data={el} />
               ))}
             </div>
             <Stack spacing={5} className="pagination_style">
