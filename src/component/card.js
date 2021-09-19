@@ -1,22 +1,35 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import {
+  TextField,
+  Typography,
+  Button,
+  CardContent,
+  CardActions,
+  Card,
+} from "@mui/material";
 
 export default function ProfileCard({ name, email, dob, country }) {
   return (
     <Card sx={{ width: 275 }}>
       <CardContent>
-        <Typography variant="h5" component="div">
-          {name}
-        </Typography>
+        <TextField
+          id="standard-basic"
+          label="Name:"
+          variant="standard"
+          value={name}
+        />
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {email}
         </Typography>
         <Typography variant="body2">
-          {dob.split("T")[0]}
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            type="date"
+            label="DOB:"
+            value={dob.split("T")[0]}
+            disabled
+          />
           <br />
           {country}
         </Typography>
