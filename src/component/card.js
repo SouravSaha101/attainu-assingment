@@ -35,7 +35,6 @@ export default function ProfileCard({ name, email, dob, country }) {
         </Typography>
       </CardContent>
       <CardActions>
-        {/* todo */}
         <Button size="small">Edit</Button>
         <Button size="small">Delete</Button>
       </CardActions>
