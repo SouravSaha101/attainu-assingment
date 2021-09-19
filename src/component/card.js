@@ -27,7 +27,7 @@ const dateFormatter = (date) => {
   ];
   let dateAr = date.split("-");
   let day = `${dateAr[2].trim()}${nth(dateAr[2])}`;
-  let month = monthList[+dateAr[1]];
+  let month = monthList[+dateAr[1]-1];
   let year = dateAr[0];
   let finalDate = day + " " + month + " " + year;
   return finalDate;
