@@ -6,8 +6,25 @@
   justify-items: center;
 }
 
-.pagination_style{
-    margin: 3rem;
-    justify-content: center;
-    align-items: center;
+.pagination_style {
+  margin: 3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1200px) {
+  .grid_style {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .grid_style {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .grid_style {
+    grid-template-columns: 1fr;
+  }
 }

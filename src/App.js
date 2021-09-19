@@ -15,11 +15,13 @@ import axios from "axios";
 
 function App() {
   const [loading, setLoading] = useState(false);
-  const [current, setCurrent] = useState(1);
+  const [totalPages, setTotalPages] = useState(10)
+  const [currentPage, setCurrentPage] = useState(1);
   const [something, setSomething] = useState([]);
   const [users, setUsers] = useState([]);
   const [uniqueCountryData, setUniqueCountryData] = useState([]);
   const [chunkData, setChunkData] = useState([]);
+  
 
   useEffect(() => {
     pageLoad();
@@ -37,7 +39,8 @@ function App() {
       setLoading(false);
       setUsers(data);
       setSomething(data);
-      setChunkData(data.slice(0, 15));
+      setTotalPages(Math.ceil(data.length / 12))
+      setChunkData(data.slice(0, 12));
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -71,7 +74,12 @@ function App() {
               ))}
             </div>
             <Stack spacing={5} className="pagination_style">
-              <Pagination count={10} variant="outlined" shape="rounded" />
+              <Pagination
+                page={currentPage}
+                variant="outlined"
+                shape="rounded"
+                count={totalPages}
+              />
             </Stack>
           </>
         ) : (

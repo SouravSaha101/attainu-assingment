@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { InputLabel, Select, MenuItem, TextField } from "@mui/material";
 
-export default function Filter({countryData}) {
+export default function Filter({ countryData }) {
   const [selectedDate, handleDateChange] = useState("");
   const [country, selectCountry] = useState("");
   const [selectname, setName] = useState("");
@@ -12,22 +12,23 @@ export default function Filter({countryData}) {
 
   const styleObj = { minWidth: 220, marginRight: "1rem", marginBottom: "1rem" };
   return (
-    <div>
-      <InputLabel id="coutry_select">Select Country</InputLabel>
-      <Select
-        labelId="coutry_select"
-        id="coutry_select"
-        value={country}
-        onChange={(e) => selectCountry(e.target.value)}
-        sx={styleObj}
-      >
-        {countryData &&
-          countryData.map((country, index) => (
-            <MenuItem key={index} value={country}>
-              {country}
-            </MenuItem>
-          ))}
-      </Select>
+    <>
+        <InputLabel id="coutry_select">Select Country</InputLabel>
+        <Select
+          labelId="coutry_select"
+          id="coutry_select"
+          value={country}
+          
+          onChange={(e) => selectCountry(e.target.value)}
+          sx={styleObj}
+        >
+          {countryData &&
+            countryData.map((country, index) => (
+              <MenuItem key={index} value={country}>
+                {country}
+              </MenuItem>
+            ))}
+        </Select>
       <TextField
         label="Date of Birth"
         type="date"
@@ -49,6 +50,6 @@ export default function Filter({countryData}) {
       >
         Search
       </Button>
-    </div>
+    </>
   );
 }
