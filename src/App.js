@@ -97,13 +97,15 @@ function App() {
           User Data
         </Typography>
         <section>
-          {/* <InputLabel id="coutry_select">Select Country</InputLabel> */}
+          {/* <InputLabel id="coutry_select_label" htmlFor="coutry_select">Select Country</InputLabel> */}
           <Select
-            labelId="coutry_select"
+            labelId="coutry_select_label"
             id="coutry_select"
             value={country}
             onChange={countrySelectHandler}
             sx={styleObj}
+            placeholder="Select Country"
+            label="Select Country"
           >
             {uniqueCountryData &&
               uniqueCountryData.map((country, index) => (
