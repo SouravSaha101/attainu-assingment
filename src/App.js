@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect, useCallback,Suspense } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import {
   Divider,
   Typography,
@@ -26,6 +26,7 @@ function App() {
   const [masterData, setMasterData] = useState([]);
   const [country, selectCountry] = useState("");
   const [searchName, setSearchName] = useState("");
+  const [date, setDate] = useState("");
 
   const handleClick = () => {
     setLoading(true);
@@ -34,6 +35,7 @@ function App() {
     );
     setPaginationOnChange(filterData);
     selectCountry("");
+    setDate("")
     setLoading(false);
   };
 
@@ -73,6 +75,7 @@ function App() {
     );
     setPaginationOnChange(filterData);
     setSearchName("");
+    setDate("")
   };
 
   const setPaginationOnChange = useCallback(
@@ -112,6 +115,16 @@ function App() {
     },
     [masterData, setPaginationOnChange]
   );
+
+  const dateHandler = (e) => {
+    setDate(e.target.value);
+    let filterData = masterData.filter(
+      (el) => el["Date of birth"].split("T")[0] === e.target.value
+    );
+    setPaginationOnChange(filterData);
+    setSearchName("");
+    selectCountry("");
+  };
   return (
     <>
       <Container maxWidth="xl" sx={{ textAlign: "center" }}>
@@ -137,6 +150,14 @@ function App() {
                 </MenuItem>
               ))}
           </Select>
+          <TextField
+            label="Date of Birth"
+            type="date"
+            InputLabelProps={{ shrink: true }}
+            value={date}
+            onChange={dateHandler}
+            sx={styleObj}
+          />
           <TextField
             label="Search By Name"
             value={searchName}
