@@ -1,6 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
-import ProfileCard from "./component/card";
+import React, { useState, useEffect, useCallback,Suspense } from "react";
 import {
   Divider,
   Typography,
@@ -15,6 +14,7 @@ import {
   Button,
 } from "@mui/material";
 import axios from "axios";
+const ProfileCard = React.lazy(() => import("./component/card"));
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,6 @@ function App() {
       setTotalPages(Math.ceil(data.length / 12));
       setChunkData(data.slice(0, 12));
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };
@@ -73,39 +72,46 @@ function App() {
       (el) => el["Country"] === e.target.value
     );
     setPaginationOnChange(filterData);
-    setSearchName("")
+    setSearchName("");
   };
 
-  function setPaginationOnChange(filterData) {
-    setUsers(filterData);
-
-    let totalPage = Math.ceil(filterData.length / 12);
-
-    setTotalPages(totalPage);
-    let data;
-    if (currentPage > totalPage) {
-      data = filterData.slice(0, 12);
-      setCurrentPage(1);
-    } else {
-      data = filterData.slice((currentPage - 1) * 12, currentPage * 12);
-    }
-    setChunkData(data);
-  }
-  const editHandler = (data) => {
-    let newData = [...masterData];
-    let index = newData.findIndex((e) => e["Id"] === data["Id"]);
-    newData[index]["Full Name"] = data["Full Name"];
-    newData[index]["Date of birth"] = data["Date of birth"];
-    newData[index]["Email"] = data["Email"];
-    newData[index]["Country"] = data["Country"];
-    setMasterData(newData);
-    setPaginationOnChange(newData);
-  };
-  const deleteHandler = (id) => {
-    let newData = masterData.filter((e) => e["Id"] !== id);
-    setMasterData(newData);
-    setPaginationOnChange(newData);
-  };
+  const setPaginationOnChange = useCallback(
+    (filterData) => {
+      setUsers(filterData);
+      let totalPage = Math.ceil(filterData.length / 12);
+      setTotalPages(totalPage);
+      let data;
+      if (currentPage > totalPage) {
+        data = filterData.slice(0, 12);
+        setCurrentPage(1);
+      } else {
+        data = filterData.slice((currentPage - 1) * 12, currentPage * 12);
+      }
+      setChunkData(data);
+    },
+    [currentPage]
+  );
+  const editHandler = useCallback(
+    (data) => {
+      let newData = [...masterData];
+      let index = newData.findIndex((e) => e["Id"] === data["Id"]);
+      newData[index]["Full Name"] = data["Full Name"];
+      newData[index]["Date of birth"] = data["Date of birth"];
+      newData[index]["Email"] = data["Email"];
+      newData[index]["Country"] = data["Country"];
+      setMasterData(newData);
+      setPaginationOnChange(newData);
+    },
+    [masterData, setPaginationOnChange]
+  );
+  const deleteHandler = useCallback(
+    (id) => {
+      let newData = masterData.filter((e) => e["Id"] !== id);
+      setMasterData(newData);
+      setPaginationOnChange(newData);
+    },
+    [masterData, setPaginationOnChange]
+  );
   return (
     <>
       <Container maxWidth="xl" sx={{ textAlign: "center" }}>
@@ -156,13 +162,15 @@ function App() {
           <>
             <div className="grid_style">
               {chunkData.map((el) => (
-                <ProfileCard
-                  key={el.Id}
-                  data={el}
-                  editData={editHandler}
-                  deleteData={deleteHandler}
-                  uniqueCountryData={uniqueCountryData}
-                />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <ProfileCard
+                    key={el.Id}
+                    data={el}
+                    editData={editHandler}
+                    deleteData={deleteHandler}
+                    uniqueCountryData={uniqueCountryData}
+                  />
+                </Suspense>
               ))}
             </div>
             <Stack spacing={10} className="pagination_style">

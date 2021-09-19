@@ -10,12 +10,7 @@ import {
   MenuItem,
 } from "@mui/material";
 
-export default function ProfileCard({
-  data,
-  editData,
-  deleteData,
-  uniqueCountryData,
-}) {
+function ProfileCard({ data, editData, deleteData, uniqueCountryData }) {
   const [isEdit, setIsEdit] = useState(false);
   const [userData, setUserData] = useState(data);
 
@@ -126,3 +121,4 @@ export default function ProfileCard({
     </Card>
   );
 }
+export default React.memo(ProfileCard);
