@@ -183,7 +183,7 @@ function App() {
           <>
             <div className="grid_style">
               {chunkData.map((el) => (
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense key={el.Id} fallback={<div>Loading...</div>}>
                   <ProfileCard
                     key={el.Id}
                     data={el}

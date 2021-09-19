@@ -10,6 +10,41 @@ import {
   MenuItem,
 } from "@mui/material";
 
+const dateFormatter = (date) => {
+  const monthList = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let dateAr = date.split("-");
+  let day = `${dateAr[2].trim()}${nth(dateAr[2])}`;
+  let month = monthList[+dateAr[1]];
+  let year = dateAr[0];
+  let finalDate = day + " " + month + " " + year;
+  return finalDate;
+};
+const nth = function (d) {
+  if (d > 3 && d < 21) return "th";
+  switch (d % 10) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
+};
 function ProfileCard({ data, editData, deleteData, uniqueCountryData }) {
   const [isEdit, setIsEdit] = useState(false);
   const [userData, setUserData] = useState(data);
@@ -44,10 +79,8 @@ function ProfileCard({ data, editData, deleteData, uniqueCountryData }) {
             <TextField
               id="standard-basic"
               variant="standard"
-              type="date"
               label="DOB:"
-              value={data["Date of birth"].split("T")[0]}
-              disabled
+              value={dateFormatter(data["Date of birth"].split("T")[0])}
               sx={{ mb: 4.3 }}
             />
             <br />
