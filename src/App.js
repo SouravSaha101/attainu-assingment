@@ -33,7 +33,7 @@ function App() {
       el["Full Name"].toLowerCase().includes(searchName.toLowerCase())
     );
     setPaginationOnChange(filterData);
-    selectCountry("")
+    selectCountry("");
     setLoading(false);
   };
 
@@ -162,13 +162,14 @@ function App() {
                 />
               ))}
             </div>
-            <Stack spacing={5} className="pagination_style">
+            <Stack spacing={10} className="pagination_style">
               <Pagination
                 page={currentPage}
                 variant="outlined"
                 shape="rounded"
                 count={totalPages}
                 onChange={paginationHandler}
+                sx={{ flexWrap: "nowrap" }}
               />
             </Stack>
           </>
